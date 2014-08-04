@@ -23,10 +23,10 @@ include("../sql-connections/db-creds.inc");
 if(isset($_GET['id']))
 {
 $id=$_GET['id'];
-//logging the connection parameters to a file for analysis.
-$fp=fopen('result.txt','a');
+
+
 fwrite($fp,'ID:'.$id."\n");
-fclose($fp);
+;
 
 // connectivity
 //mysql connections for stacked query examples.

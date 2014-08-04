@@ -26,16 +26,17 @@ if(isset($_GET['id']))
 $id=check_quotes($_GET['id']);
 //echo "The filtered request is :" .$id . "<br>";
 
-//logging the connection parameters to a file for analysis.
-$fp=fopen('result.txt','a');
+
+
 fwrite($fp,'ID:'.$id."\n");
-fclose($fp);
+;
 
 // connectivity 
 
 mysql_query("SET NAMES gbk");
 $sql="SELECT * FROM users WHERE id='$id' LIMIT 0,1";
 $result=mysql_query($sql);
+    echo "SQL语句如下：<br>".$sql."<br>执行结果：<br>";
 $row = mysql_fetch_array($result);
 
 	if($row)

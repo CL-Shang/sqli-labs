@@ -19,21 +19,15 @@ include("../sql-connections/sql-connect.php");
 if(isset($_GET['id']))
 {
 	$id=$_GET['id'];
-	//logging the connection parameters to a file for analysis.
-	$fp=fopen('result.txt','a');
-	fwrite($fp,'ID:'.$id."\n");
-	fclose($fp);
 
 	//fiddling with comments
 	$id= blacklist($id);
-	//echo "<br>";
-	//echo $id;
-	//echo "<br>";
-	$hint=$id;
+
 
 // connectivity 
 	$sql="SELECT * FROM users WHERE id='$id' LIMIT 0,1";
 	$result=mysql_query($sql);
+    echo "SQL语句如下：<br>".$sql."<br>执行结果：<br>";
 	$row = mysql_fetch_array($result);
 	if($row)
 	{
@@ -50,11 +44,6 @@ if(isset($_GET['id']))
 		echo "</font>";  
 	}
 }
-else 
-{ 
-	echo "Please input the ID as parameter with numeric value";
-}
-
 
 function blacklist($id)
 {
@@ -68,20 +57,7 @@ function blacklist($id)
 
 
 ?>
-</font> </div></br></br></br><center>
-<img src="../images/Less-25.jpg" />
-</br>
-</br>
-</br>
-<img src="../images/Less-25-1.jpg" />
-</br>
-</br>
-<font size='4' color= "#33FFFF">
-<?php
-echo "Hint: Your Input is Filtered with following result: ".$hint;
-?>
-</font> 
-</center>
+</font> </div></br></br></br>
 </body>
 </html>
 

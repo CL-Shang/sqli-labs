@@ -2,12 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Less-23 **Error Based- no comments**</title>
+<title>GET - 基于错误 - 脱掉注释</title>
 </head>
 
 <body bgcolor="#000000">
-<div style=" margin-top:70px;color:#FFF; font-size:23px; text-align:center">Welcome&nbsp;&nbsp;&nbsp;<font color="#FF0000"> Dhakkan </font><br>
+<div style=" margin-top:70px;color:#FFF; font-size:23px; text-align:center">已知index.php有get参数，参数名称为id<br>请构造注入语句获取额外信息</font><br>
 <font size="3" color="#FFFF00">
+ 
 
 
 <?php
@@ -25,26 +26,24 @@ $reg1 = "/--/";
 $replace = "";
 $id = preg_replace($reg, $replace, $id);
 $id = preg_replace($reg1, $replace, $id);
-//logging the connection parameters to a file for analysis.
-$fp=fopen('result.txt','a');
-fwrite($fp,'ID:'.$id."\n");
-fclose($fp);
 
 // connectivity 
 
-
 $sql="SELECT * FROM users WHERE id='$id' LIMIT 0,1";
 $result=mysql_query($sql);
-$row = mysql_fetch_array($result);
+    echo "SQL语句如下：<br>".$sql."<br>执行结果：<br>";
 
-	if($row)
+	if($result)
 	{
-  	echo '<font color= "#0000ff">';	
-  	echo 'Your Login name:'. $row['username'];
-  	echo "<br>";
-  	echo 'Your Password:' .$row['password'];
-  	echo "</font>";
-  	}
+        while($row = mysql_fetch_array($result))
+        {
+            echo '<font color= "#00ffff">';	
+            echo 'Your Login name:'. $row['username']; 
+            echo "<br>";
+            echo 'Your Password:' .$row['password'];
+            echo "</font>";
+        }
+    }
 	else 
 	{
 	echo '<font color= "#FFFF00">';
@@ -52,11 +51,9 @@ $row = mysql_fetch_array($result);
 	echo "</font>";  
 	}
 }
-	else { echo "Please input the ID as parameter with numeric value";}
 
 ?>
 </font> </div></br></br></br><center>
-<img src="../images/Less-23.jpg" /></center>
 </body>
 </html>
 

@@ -26,10 +26,10 @@ if(isset($_GET['id']))
 	//echo $id1;
 	whitelist($id1);
 	
-	//logging the connection parameters to a file for analysis.
-	$fp=fopen('result.txt','a');
+	
+	
 	fwrite($fp,'ID:'.$id."\n");
-	fclose($fp);
+	;
 	
 	
 	
@@ -37,6 +37,7 @@ if(isset($_GET['id']))
 // connectivity 
 	$sql="SELECT * FROM users WHERE id='$id' LIMIT 0,1";
 	$result=mysql_query($sql);
+    echo "SQL语句如下：<br>".$sql."<br>执行结果：<br>";
 	$row = mysql_fetch_array($result);
 	if($row)
 	{

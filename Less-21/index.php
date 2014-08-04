@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<title>Less-21 Cookie Injection- Error Based- complex - string</title>
+<title>Cookie注入 - base64编码 - 单引号和圆括号</title>
 </head>
 
 <body bgcolor="#000000">
@@ -15,19 +15,18 @@ if(!isset($_COOKIE['uname']))
 	//including the Mysql connect parameters.
 	include("../sql-connections/sql-connect.php");
 
-	echo "<div style=' margin-top:20px;color:#FFF; font-size:24px; text-align:center'> Welcome&nbsp;&nbsp;&nbsp;<font color='#FF0000'> Dhakkan </font><br></div>";
-	echo "<div  align='center' style='margin:20px 0px 0px 510px;border:20px; background-color:#0CF; text-align:center;width:400px; height:150px;'>";
-	echo "<div style='padding-top:10px; font-size:15px;'>";
+	echo '<div style=" margin-top:70px;color:#FFF; font-size:23px; text-align:center">使用Dumb/Dumb登陆后<br>通过修改cookie来获取其他人的信息</font><br>';
+	echo '<font size="3" color="#FFFF00">';
  
 
 	echo "<!--Form to post the contents -->";
 	echo '<form action=" " name="form1" method="post">';
 
-	echo ' <div style="margin-top:15px; height:30px;">Username : &nbsp;&nbsp;&nbsp;';
-	echo '   <input type="text"  name="uname" value=""/>  </div>';
+	echo ' <div style="margin-top:15px; height:30px;">用户名 : &nbsp;&nbsp;&nbsp;';
+	echo '   <input type="text"  name="uname" value="Dumb"/>  </div>';
   
-	echo ' <div> Password : &nbsp; &nbsp; &nbsp;';
-	echo '   <input type="text" name="passwd" value=""/></div></br>';	
+	echo ' <div> 密&nbsp;&nbsp;&nbsp;&nbsp;码 : &nbsp; &nbsp; &nbsp;';
+	echo '   <input type="text" name="passwd" value="Dumb"/></div></br>';	
 	echo '   <div style=" margin-top:9px;margin-left:90px;"><input type="submit" name="submit" value="Submit" /></div>';
 
 	echo '</form>';
@@ -36,7 +35,6 @@ if(!isset($_COOKIE['uname']))
 	echo '<div style=" margin-top:10px;color:#FFF; font-size:23px; text-align:center">';
 	echo '<font size="3" color="#FFFF00">';
 	echo '<center><br><br><br>';
-	echo '<img src="../images/Less-21.jpg" />';
 	echo '</center>';
 
 
@@ -75,38 +73,22 @@ function check_input($value)
 	
 		$uname = check_input($_POST['uname']);
 		$passwd = check_input($_POST['passwd']);
-		
-	
-
-		
 		$sql="SELECT  users.username, users.password FROM users WHERE users.username=$uname and users.password=$passwd ORDER BY users.id DESC LIMIT 0,1";
 		$result1 = mysql_query($sql);
 		$row1 = mysql_fetch_array($result1);
 			if($row1)
 				{
-				echo '<font color= "#FFFF00" font size = 3 >';
 				setcookie('uname', base64_encode($row1['username']), time()+3600);	
-				
-				echo "I LOVE YOU COOKIES";
-				echo "</font>";
-				echo '<font color= "#0000ff" font size = 3 >';			
-				//echo 'Your Cookie is: ' .$cookee;
-				echo "</font>";
-				echo "<br>";
-				print_r(mysql_error());			
-				echo "<br><br>";
-				echo '<img src="../images/flag.jpg" />';
-				echo "<br>";
 				header ('Location: index.php');
 				}
 			else
 				{
-				echo '<font color= "#0000ff" font size="3">';
+				echo '<font color= "#00ffff" font size="3">';
 				//echo "Try again looser";
 				print_r(mysql_error());
 				echo "</br>";			
 				echo "</br>";
-				echo '<img src="../images/slap.jpg" />';	
+				echo '登录失败';	
 				echo "</font>";  
 				}
 			}
@@ -118,9 +100,6 @@ function check_input($value)
 }
 else
 {
-
-
-
 	if(!isset($_POST['submit']))
 		{
 			$cookee = $_COOKIE['uname'];
@@ -128,67 +107,50 @@ else
 			$timestamp = time() + 3600;
 			echo "<center>";
 			echo "<br><br><br><b>";
-			echo '<img src="../images/Less-21.jpg" />';
 			echo "<br><br><b>";
-			echo '<br><font color= "red" font size="4">';	
-			echo "YOUR USER AGENT IS : ".$_SERVER['HTTP_USER_AGENT'];
-			echo "</font><br>";	
-			echo '<font color= "cyan" font size="4">';	
-			echo "YOUR IP ADDRESS IS : ".$_SERVER['REMOTE_ADDR'];			
-			echo "</font><br>";			
 			echo '<font color= "#FFFF00" font size = 4 >';
-			echo "DELETE YOUR COOKIE OR WAIT FOR IT TO EXPIRE <br>";
+			echo "登陆成功，你可以修改cookie来进行注入了 <br>";
 			echo '<font color= "orange" font size = 5 >';			
-			echo "YOUR COOKIE : uname = $cookee and expires: " . date($format, $timestamp);
+			echo "你的 COOKIE是 : uname = $cookee <br>到期时间: " . date($format, $timestamp);
 			
 			$cookee = base64_decode($cookee);
 			echo "<br></font>";
 			$sql="SELECT * FROM users WHERE username=('$cookee') LIMIT 0,1";
 			$result=mysql_query($sql);
+    echo "SQL语句如下：<br>".$sql."<br>执行结果：<br>";
 			if (!$result)
   				{
-  				die('Issue with your mysql: ' . mysql_error());
+  				die(mysql_error());
   				}
 			$row = mysql_fetch_array($result);
 			if($row)
 				{
 			  	echo '<font color= "pink" font size="5">';	
-			  	echo 'Your Login name:'. $row['username'];
+			  	echo '用户名:'. $row['username'];
 			  	echo "<br>";
 				echo '<font color= "grey" font size="5">';  	
-				echo 'Your Password:' .$row['password'];
+				echo '密&nbsp;&nbsp;&nbsp;&nbsp;码:' .$row['password'];
 			  	echo "</font></b>";
 				echo "<br>";
-				echo 'Your ID:' .$row['id'];
+				echo '你的 ID:' .$row['id'];
 			  	}
 			else	
 				{
 				echo "<center>";
 				echo '<br><br><br>';
-				echo '<img src="../images/slap1.jpg" />';
 				echo "<br><br><b>";
-				//echo '<img src="../images/Less-20.jpg" />';
 				}
 			echo '<center>';
 			echo '<form action="" method="post">';
-			echo '<input  type="submit" name="submit" value="Delete Your Cookie!" />';
+			echo '<input  type="submit" name="submit" value="删除Cookie" />';
 			echo '</form>';
 			echo '</center>';
 		}	
 	else
 		{
-		echo '<center>';
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo '<font color= "#FFFF00" font size = 6 >';
-		echo " Your Cookie is deleted";
+		
 				setcookie('uname', base64_encode($row1['username']), time()-3600);
 				header ('Location: index.php');
-		echo '</font></center></br>';
 		
 		}		
 
@@ -198,13 +160,7 @@ else
 			//header ('Location: main.php');
 			echo "<br>";
 			echo "<br>";
-			
-			//echo '<img src="../images/slap.jpg" /></center>';
-			//logging the connection parameters to a file for analysis.	
-		$fp=fopen('result.txt','a');
-		fwrite($fp,'Cookie:'.$cookee."\n");
-	
-		fclose($fp);
+
 	
 }
 ?>

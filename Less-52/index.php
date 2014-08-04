@@ -14,10 +14,10 @@ include("../sql-connections/sqli-connect.php");
 $id=$_GET['sort'];	
 if(isset($id))
 {
-	//logging the connection parameters to a file for analysis.
-	$fp=fopen('result.txt','a');
+	
+	
 	fwrite($fp,'SORT:'.$id."\n");
-	fclose($fp);
+	;
 
 	$sql="SELECT * FROM users ORDER BY $id";
 	/* execute multi query */

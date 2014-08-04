@@ -6,7 +6,7 @@
 </head>
 
 <body bgcolor="#000000">
-<div style=" margin-top:60px;color:#FFF; font-size:23px; text-align:center">Welcome&nbsp;&nbsp;&nbsp;<font color="#FF0000"> Dhakkan </font><br>
+
 <font size="3" color="#FFFF00">
 
 
@@ -19,10 +19,7 @@ include("../sql-connections/sql-connect.php");
 if(isset($_GET['id']))
 {
 $id=$_GET['id'];
-//logging the connection parameters to a file for analysis.
-$fp=fopen('result.txt','a');
-fwrite($fp,'ID:'.$id."\n");
-fclose($fp);
+
 
 	//fiddling with comments
 	$id= blacklist($id);
@@ -34,6 +31,7 @@ fclose($fp);
 // connectivity 
 $sql="SELECT * FROM users WHERE id=$id LIMIT 0,1";
 $result=mysql_query($sql);
+    echo "SQL语句如下：<br>".$sql."<br>执行结果：<br>";
 $row = mysql_fetch_array($result);
 
 	if($row)
@@ -52,15 +50,10 @@ $row = mysql_fetch_array($result);
 		//print_r(mysql_error());
 		//echo "You have an error in your SQL syntax";
 		echo "</br></font>";	
-		echo '<font color= "#0000ff" font size= 3>';	
+		echo '<font color= "#00ffff" font size= 3>';	
 	
 	}
 }
-	else 
-{ 
-	echo "Please input the ID as parameter with numeric value";
-}
-
 function blacklist($id)
 {
 	$id= preg_replace('/or/i',"", $id);			//strip out OR (non case sensitive)
@@ -73,19 +66,6 @@ function blacklist($id)
 
 ?>
 
-</font> </div></br></br></br><center>
-<img src="../images/Less-25a.jpg" />
-</br>
-</br>
-</br>
-<img src="../images/Less-25a-1.jpg" />
-</br>
-</br>
-<font size='4' color= "#33FFFF">
-<?php
-echo "Hint: Your Input is Filtered with following result: ".$hint;
-?>
-</font> 
-</center>
+</font> </div></br></br></br>
 </body>
 </html>

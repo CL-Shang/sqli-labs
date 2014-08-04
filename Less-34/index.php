@@ -51,11 +51,11 @@ if(isset($_POST['uname']) && isset($_POST['passwd']))
         //echo "username before addslashes is :".$uname1 ."<br>";
         //echo "Input password before addslashes is : ".$passwd1. "<br>";
         
-	//logging the connection parameters to a file for analysis.
-	$fp=fopen('result.txt','a');
+	
+	
 	fwrite($fp,'User Name:'.$uname1);
 	fwrite($fp,'Password:'.$passwd1."\n");
-	fclose($fp);
+	;
         
         $uname = addslashes($uname1);
         $passwd= addslashes($passwd1);
@@ -67,16 +67,17 @@ if(isset($_POST['uname']) && isset($_POST['passwd']))
 	mysql_query("SET NAMES gbk");
 	@$sql="SELECT username, password FROM users WHERE username='$uname' and password='$passwd' LIMIT 0,1";
 	$result=mysql_query($sql);
+    echo "SQL语句如下：<br>".$sql."<br>执行结果：<br>";
 	$row = mysql_fetch_array($result);
 
 	if($row)
 	{
-  		//echo '<font color= "#0000ff">';	
+  		//echo '<font color= "#00ffff">';	
   		
   		echo "<br>";
 		echo '<font color= "#FFFF00" font size = 4>';
 		//echo " You Have successfully logged in\n\n " ;
-		echo '<font size="3" color="#0000ff">';	
+		echo '<font size="3" color="#00ffff">';	
 		echo "<br>";
 		echo 'Your Login name:'. $row['username'];
 		echo "<br>";
@@ -85,13 +86,13 @@ if(isset($_POST['uname']) && isset($_POST['passwd']))
 		echo "</font>";
 		echo "<br>";
 		echo "<br>";
-		echo '<img src="../images/flag.jpg"  />';	
+		echo '猜对了';	
 		
   		echo "</font>";
   	}
 	else  
 	{
-		echo '<font color= "#0000ff" font size="3">';
+		echo '<font color= "#00ffff" font size="3">';
 		//echo "Try again looser";
 		print_r(mysql_error());
 		echo "</br>";

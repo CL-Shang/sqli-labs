@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Less-15- Blind- Boolian Based- String</title>
+	<title>POST - 盲注 - 基于布尔/时间 - 单引号</title>
 </head>
 
 <body bgcolor="#000000">
-<div style=" margin-top:20px;color:#FFF; font-size:24px; text-align:center"> Welcome&nbsp;&nbsp;<font color="#FF0000"> Dhakkan </font><br></div>
+<div style=" margin-top:20px;color:#FFF; font-size:24px; text-align:center"> 请登录 </font><br></div>
 
 <div  align="center" style="margin:40px 0px 0px 520px;border:20px; background-color:#0CF; text-align:center; width:400px; height:150px;">
 
@@ -15,14 +15,14 @@
 
 <!--Form to post the data for sql injections Error based SQL Injection-->
 <form action="" name="form1" method="post">
-	<div style="margin-top:15px; height:30px;">Username : &nbsp;&nbsp;&nbsp;
+	<div style="margin-top:15px; height:30px;">用户名 : &nbsp;&nbsp;&nbsp;
 	    <input type="text"  name="uname" value=""/>
 	</div>  
-	<div> Password  : &nbsp;&nbsp;&nbsp;
+	<div> 密&nbsp;&nbsp;&nbsp;&nbsp;码  : &nbsp;&nbsp;&nbsp;
 		<input type="text" name="passwd" value=""/>
 	</div></br>
-	<div style=" margin-top:9px;margin-left:90px;">
-		<input type="submit" name="submit" value="Submit" />
+	<div style=" margin-top:19px;margin-left:70px;">
+		<input type="submit" name="submit" value="提交" />
 	</div>
 </form>
 
@@ -45,27 +45,19 @@ if(isset($_POST['uname']) && isset($_POST['passwd']))
 {
 	$uname=$_POST['uname'];
 	$passwd=$_POST['passwd'];
-
-	//logging the connection parameters to a file for analysis.
-	$fp=fopen('result.txt','a');
-	fwrite($fp,'User Name:'.$uname);
-	fwrite($fp,'Password:'.$passwd."\n");
-	fclose($fp);
-
-
-	// connectivity 
 	@$sql="SELECT username, password FROM users WHERE username='$uname' and password='$passwd' LIMIT 0,1";
 	$result=mysql_query($sql);
+    echo "SQL语句如下：<br>".$sql."<br>执行结果：<br>";
 	$row = mysql_fetch_array($result);
 
 	if($row)
 	{
-  		//echo '<font color= "#0000ff">';	
+  		//echo '<font color= "#00ffff">';	
   		
   		echo "<br>";
 		echo '<font color= "#FFFF00" font size = 4>';
 		//echo " You Have successfully logged in\n\n " ;
-		echo '<font size="3" color="#0000ff">';	
+		echo '<font size="3" color="#00ffff">';	
 		echo "<br>";
 		//echo 'Your Login name:'. $row['username'];
 		echo "<br>";
@@ -74,19 +66,19 @@ if(isset($_POST['uname']) && isset($_POST['passwd']))
 		echo "</font>";
 		echo "<br>";
 		echo "<br>";
-		echo '<img src="../images/flag.jpg"  />';	
+		echo '猜对了';	
 		
   		echo "</font>";
   	}
 	else  
 	{
-		echo '<font color= "#0000ff" font size="3">';
+		echo '<font color= "#00ffff" font size="3">';
 		//echo "Try again looser";
 		//print_r(mysql_error());
 		echo "</br>";
 		echo "</br>";
 		echo "</br>";
-		echo '<img src="../images/slap.jpg"   />';	
+		echo '猜错了';	
 		echo "</font>";  
 	}
 }
