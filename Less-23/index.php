@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>GET - 基于错误 - 脱掉注释</title>
+<title>GET - 基于错误 - 过滤注释</title>
 </head>
 
 <body bgcolor="#000000">
@@ -18,32 +18,24 @@ include("../sql-connections/sql-connect.php");
 // take the variables 
 if(isset($_GET['id']))
 {
-$id=$_GET['id'];
-
-//filter the comments out so as to comments should not work
-$reg = "/#/";
-$reg1 = "/--/";
-$replace = "";
-$id = preg_replace($reg, $replace, $id);
-$id = preg_replace($reg1, $replace, $id);
-
-// connectivity 
-
-$sql="SELECT * FROM users WHERE id='$id' LIMIT 0,1";
-$result=mysql_query($sql);
+    $id=$_GET['id'];   
+    $reg = "/#/";
+    $reg1 = "/--/";
+    $replace = "";
+    $id = preg_replace($reg, $replace, $id);
+    $id = preg_replace($reg1, $replace, $id);
+    $sql="SELECT * FROM users WHERE id='$id' LIMIT 0,1";
+    $result=mysql_query($sql);
     echo "SQL语句如下：<br>".$sql."<br>执行结果：<br>";
-
-	if($result)
-	{
-        while($row = mysql_fetch_array($result))
-        {
-            echo '<font color= "#00ffff">';	
-            echo 'Your Login name:'. $row['username']; 
-            echo "<br>";
-            echo 'Your Password:' .$row['password'];
-            echo "</font>";
-        }
-    }
+	if($row = mysql_fetch_array($result))
+    {
+  	echo '<font color= "#00ffff">';	
+  	echo '你的用户名:'. $row['username'];
+  	echo "<br>";
+  	echo '你的密码:' .$row['password'];
+    echo "<br>";
+  	echo "</font>";
+  	}
 	else 
 	{
 	echo '<font color= "#FFFF00">';
@@ -53,7 +45,7 @@ $result=mysql_query($sql);
 }
 
 ?>
-</font> </div></br></br></br><center>
+</font> </div></br></br></br>
 </body>
 </html>
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>POST - Headers注入 - UA部分 - 基于错误</title>
+<title>POST - Headers注入 - X-FORWARDED-FOR部分 - 基于错误</title>
 </head>
 
 <body bgcolor="#000000">

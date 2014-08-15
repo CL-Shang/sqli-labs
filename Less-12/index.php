@@ -45,7 +45,6 @@ if(isset($_POST['uname']) && isset($_POST['passwd']))
 {
 	$uname=$_POST['uname'];
 	$passwd=$_POST['passwd'];
-
 	$uname='"'.$uname.'"';
 	$passwd='"'.$passwd.'"'; 
 	@$sql="SELECT username, password FROM users WHERE username=($uname) and password=($passwd) LIMIT 0,1";
